@@ -20,15 +20,15 @@ const getAllReservations = async (req, res) => {
 
 const addReservation = async (req, res) => {
     const {
-      venueID,
+      eventID,
       userID
       
     } = req.body;
     
     try {
       const result = await db.query(
-        `INSERT INTO reservation (venueID, userID) VALUES (?,?);`,
-        [venueID, userID]
+        `INSERT INTO reservation (eventID, userID) VALUES (?,?);`,
+        [eventID, userID]
       );
   
       console.log(result);
@@ -83,9 +83,9 @@ const addReservation = async (req, res) => {
     }
   };
 
-  const getAllReservationByVenueID = async (req, res) => {
+  const getAllReservationByEventID = async (req, res) => {
     try {
-      const [result] = await db.query(`SELECT * FROM reservation WHERE venueID = ?`, [
+      const [result] = await db.query(`SELECT * FROM reservation WHERE eventID = ?`, [
         req.params.id,
       ]);
       res.status(200).json({
@@ -104,13 +104,13 @@ const addReservation = async (req, res) => {
 
   
   const updateReservation = async (req, res) => {
-    const {venueID, userID } = req.body;
+    const {eventID, userID } = req.body;
     const ReservationId = req.params.id;
   
     try {
       const result = await db.query(
-        `UPDATE reservation SET venueID = ?, userID= ? WHERE ID= ?`,
-        [venueID, userID, ReservationId]
+        `UPDATE reservation SET eventID = ?, userID= ? WHERE ID= ?`,
+        [eventID, userID, ReservationId]
       );
   
       console.log(result);
@@ -148,4 +148,4 @@ const addReservation = async (req, res) => {
     }
   };
 
-  module.exports = { addReservation, deleteReservation, updateReservation, getAllReservations, getReservationByID, getAllReservationByUserID, getAllReservationByVenueID };
+  module.exports = { addReservation, deleteReservation, updateReservation, getAllReservations, getReservationByID, getAllReservationByUserID, getAllReservationByEventID };

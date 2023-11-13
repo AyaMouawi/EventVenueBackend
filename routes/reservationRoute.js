@@ -7,7 +7,7 @@ const {
     getAllReservations,
     getReservationByID,
     getAllReservationByUserID,
-    getAllReservationByVenueID,
+    getAllReservationByEventID,
    
   } = require('../controllers/reservationController');
 
@@ -17,7 +17,7 @@ const {
   router.get('/getAll', getAllReservations);
   router.get('/get/:id', getReservationByID);
   router.get('/getByUser/:id', getAllReservationByUserID);
-  router.get('/getByVenue/:id', getAllReservationByVenueID);
+  router.get('/getByEvent/:id', getAllReservationByEventID);
 
 
   module.exports = router;
