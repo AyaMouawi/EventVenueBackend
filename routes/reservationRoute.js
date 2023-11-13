@@ -8,6 +8,8 @@ const {
     getReservationByID,
     getAllReservationByUserID,
     getAllReservationByEventID,
+    getAllReservationsDetails,
+    getDataByReservationID,
    
   } = require('../controllers/reservationController');
 
@@ -18,6 +20,8 @@ const {
   router.get('/get/:id', getReservationByID);
   router.get('/getByUser/:id', getAllReservationByUserID);
   router.get('/getByEvent/:id', getAllReservationByEventID);
+  router.get('/getAllReservationsDetails', getAllReservationsDetails);
+  router.get('/getReservationById/:id', getDataByReservationID);
 
 
   module.exports = router;

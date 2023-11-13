@@ -83,6 +83,68 @@ const addReservation = async (req, res) => {
     }
   };
 
+  const getAllReservationsDetails = async (req, res) => {
+    try {
+      const query = `
+        SELECT
+          u.*,
+          v.*,
+          e.*,
+          r.*
+        FROM users u
+        LEFT JOIN reservation r ON u.ID = r.userID
+        LEFT JOIN events e ON r.eventID = e.ID
+        LEFT JOIN venues v ON e.venueID = v.ID`;
+  
+      const [result] = await db.query(query);
+  
+      res.status(200).json({
+        success: true,
+        message: 'Data retrieved successfully',
+        data: result,
+      });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: 'Unable to get data',
+        error,
+      });
+    }
+  };
+
+
+  const getDataByReservationID = async (req, res) => {
+    try {
+      const query = `
+        SELECT
+          users.*,
+          reservation.*,
+          events.*,
+          venues.*
+        FROM users
+        LEFT JOIN reservation ON reservation.userID = users.ID
+        LEFT JOIN events ON reservation.eventID = events.ID
+        LEFT JOIN venues ON events.venueID = venues.ID
+        WHERE reservation.ID = ?`;
+  
+      const [result] = await db.query(query, [req.params.id]);
+  
+      res.status(200).json({
+        success: true,
+        message: 'Data retrieved successfully',
+        data: result,
+      });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: 'Unable to get data',
+        error,
+      });
+    }
+  };
+  
+
+
   const getAllReservationByEventID = async (req, res) => {
     try {
       const [result] = await db.query(`SELECT * FROM reservation WHERE eventID = ?`, [
@@ -148,4 +210,4 @@ const addReservation = async (req, res) => {
     }
   };
 
-  module.exports = { addReservation, deleteReservation, updateReservation, getAllReservations, getReservationByID, getAllReservationByUserID, getAllReservationByEventID };
+  module.exports = { addReservation, deleteReservation, updateReservation, getAllReservations, getReservationByID, getAllReservationByUserID, getAllReservationByEventID, getAllReservationsDetails, getDataByReservationID };
